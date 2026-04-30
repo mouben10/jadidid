@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Mechanic | نجدة الطريق الاحترافية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animation Library -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); }
+        .emergency-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .glass-effect { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="glass-effect fixed w-full z-[100] shadow-sm border-b border-slate-200">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-red-600 text-white p-2 rounded-lg">
+                    <i class="fas fa-tools fa-lg"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter text-slate-800 uppercase">SOS<span class="text-red-600">Mechanic</span></span>
+            </div>
+            <div class="hidden lg:flex space-x-reverse space-x-8 font-bold text-slate-600">
+                <a href="#home" class="hover:text-red-600 transition">الرئيسية</a>
+                <a href="#how-it-works" class="hover:text-red-600 transition">كيف نعمل؟</a>
+                <a href="#services" class="hover:text-red-600 transition">خدماتنا</a>
+                <a href="#reviews" class="hover:text-red-600 transition">آراء العملاء</a>
+            </div>
+            <a href="tel:123456" class="emergency-pulse bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-bold flex items-center gap-2 transition-all">
+                <i class="fas fa-phone-alt"></i>
+                اتصل للنجدة
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="reveal-left">
+                <span class="bg-red-600/20 text-red-500 font-bold px-4 py-1 rounded-full text-sm mb-6 inline-block">خدمة متوفرة 24/7 في جميع الولايات</span>
+                <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
+                    هل تعطلت سيارتك <br> <span class="text-red-600 italic">في وسط الطريق؟</span>
+                </h1>
+                <p class="text-slate-300 text-xl mb-10 leading-relaxed max-w-xl">
+                    لا تقلق، موقعنا يربطك بأقرب ميكانيكي محترف يصل إليك أينما كنت وفي أي وقت. ضغطة زر واحدة تفصلك عن استئناف رحلتك.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="window.location.href='#request'" class="bg-white text-slate-900 hover:bg-red-600 hover:text-white px-10 py-4 rounded-xl font-black text-lg transition-all shadow-2xl flex items-center gap-3">
+                        <i class="fas fa-map-marker-alt"></i> حدد موقعك واطلب ميكانيكي
+                    </button>
+                </div>
+            </div>
+            <div class="reveal-right hidden lg:block">
+                <img src="https://ouch-cdn2.icons8.com/rN5MvDk9_S3y_D2XpE2N-p8X-tE7zE1eXWv8R5P2pYI/rs:fit:856:642/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvMTk4/LzU4ZTVmYzQyLWEw/ZjUtNGU5MS05ZjU1/LWI3YzU5YmJmZjQ4/MC5zdmc.png" alt="Mechanic help" class="w-full drop-shadow-[0_35px_35px_rgba(255,255,255,0.1)]">
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">كيف تعمل منصتنا؟</h2>
+                <p class="text-slate-500 text-lg">بخطوات بسيطة وسريعة جداً</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="text-center reveal-item">
+                    <div class="w-20 h-20 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6">
+                        <i class="fas fa-location-arrow"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">1. حدد مكان العطل</h3>
+                    <p class="text-slate-600">افتح الموقع وشارك موقعك الجغرافي (GPS) لنعرف أين أنت بالضبط.</p>
+                </div>
+                <div class="text-center reveal-item" style="transition-delay: 200ms;">
+                    <div class="w-20 h-20 bg-slate-100 text-slate-900 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">2. اختر الميكانيكي</h3>
+                    <p class="text-slate-600">سنظهر لك أقرب الفنيين المتاحين حولك مع تقييماتهم وخبراتهم.</p>
+                </div>
+                <div class="text-center reveal-item" style="transition-delay: 400ms;">
+                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">3. الإصلاح في مكانك</h3>
+                    <p class="text-slate-600">يصلك الميكانيكي بمعداته ويقوم بإصلاح العطل لتكمل طريقك بسلام.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Request Section -->
+    <section id="request" class="py-20 bg-slate-900">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
+                <div class="p-12">
+                    <h3 class="text-3xl font-black mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm">!</span>
+                        اطلب مساعدة فورية
+                    </h3>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block font-bold mb-2">اسمك الكامل</label>
+                                <input type="text" placeholder="مثال: محمد علي" class="w-full bg-slate-100 border-none p-4 rounded-xl focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-2">رقم الهاتف</label>
+                                <input type="tel" placeholder="0XXXXXXXXX" class="w-full bg-slate-100 border-none p-4 rounded-xl focus:ring-2 focus:ring-red-600">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">نوع السيارة</label>
+                            <input type="text" placeholder="مثال: Toyota Hilux 2022" class="w-full bg-slate-100 border-none p-4 rounded-xl focus:ring-2 focus:ring-red-600">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">وصف المشكلة (اختياري)</label>
+                            <textarea rows="4" placeholder="مثال: السيارة توقفت فجأة، مشكلة في المحرك..." class="w-full bg-slate-100 border-none p-4 rounded-xl focus:ring-2 focus:ring-red-600"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-xl text-lg shadow-xl shadow-red-600/30 transition-all">
+                            إرسال الطلب الآن <i class="fas fa-paper-plane mr-2"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-slate-200 relative h-full min-h-[400px]">
+                    <!-- Mock Map -->
+                    <div class="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/3.05,36.75,12/800x800?access_token=your_token_here')] bg-cover bg-center">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-12 -translate-y-12">
+                             <div class="relative">
+                                <div class="absolute w-24 h-24 bg-red-500/30 rounded-full animate-ping"></div>
+                                <div class="relative bg-red-600 text-white p-3 rounded-full shadow-2xl">
+                                    <i class="fas fa-car-crash fa-2xl"></i>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="absolute bottom-6 right-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200">
+                            <p class="font-bold text-sm text-slate-800 italic">يتم الآن تحديد أقرب 5 ميكانيكيين لك...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-red-600 text-white">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-black mb-2">+1500</div>
+                <div class="text-red-100">عملية إنقاذ</div>
+            </div>
+            <div>
+                <div class="text-4xl font-black mb-2">+400</div>
+                <div class="text-red-100">ميكانيكي مسجل</div>
+            </div>
+            <div>
+                <div class="text-4xl font-black mb-2">15 دقيقة</div>
+                <div class="text-red-100">متوسط وقت الوصول</div>
+            </div>
+            <div>
+                <div class="text-4xl font-black mb-2">4.9/5</div>
+                <div class="text-red-100">تقييم العملاء</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-4 gap-12 mb-16 border-b border-slate-800 pb-16">
+                <div class="col-span-2">
+                    <div class="text-2xl font-black text-white mb-6 uppercase">SOS<span class="text-red-600">Mechanic</span></div>
+                    <p class="text-slate-400 max-w-md leading-loose">
+                        نحن لسنا مجرد موقع، نحن رفيقك الدائم على الطريق. منصتنا تضمن لك راحة البال مهما كانت المسافة التي تقطعها.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">روابط سريعة</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li><a href="#" class="hover:text-red-500 transition">انضم كميكانيكي</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">شروط الخدمة</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">تواصل معنا</h4>
+                    <div class="flex space-x-reverse space-x-4 text-2xl">
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-slate-500 text-sm italic">
+                © 2026 SOS Mechanic - جميع الحقوق محفوظة لشبكة الإنقاذ السريع.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Animations Initialization
+        ScrollReveal().reveal('.reveal-left', { origin: 'left', distance: '80px', duration: 1000, delay: 200 });
+        ScrollReveal().reveal('.reveal-right', { origin: 'right', distance: '80px', duration: 1000, delay: 200 });
+        ScrollReveal().reveal('.reveal-item', { interval: 200, scale: 0.85, duration: 1000 });
+
+        // Simple Form Submission Alert
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('تم استلام طلبك! سيقوم أقرب ميكانيكي بالاتصال بك فوراً.');
+        });
+    </script>
+</body>
+</html>
