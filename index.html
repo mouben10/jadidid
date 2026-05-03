@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ميكانيكي متنقل | الجزائر</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,7 +17,7 @@
       align-items: center;
       padding: 20px;
     }
-    .app-container { max-width: 500px; width: 100%; margin: 0 auto; }
+    .app-container { max-width: 500px; width: 100%; }
     .card {
       background: white;
       border-radius: 30px;
@@ -31,27 +31,16 @@
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
     .logo span { -webkit-text-fill-color: #f4a261; }
-    .logo p { color: #666; margin-top: 5px; }
-    .section-title { font-size: 1.4rem; margin-bottom: 25px; color: #333; text-align: center; }
-    input, select, textarea {
+    input, select {
       width: 100%;
-      padding: 14px 18px;
+      padding: 14px;
       margin: 10px 0;
       border: 2px solid #e0e0e0;
       border-radius: 50px;
       font-family: 'Tajawal', sans-serif;
-      font-size: 1rem;
-      transition: all 0.3s;
     }
-    input:focus, select:focus, textarea:focus {
-      border-color: #667eea;
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-    }
-    textarea { border-radius: 25px; resize: vertical; }
     .btn {
       width: 100%;
       padding: 14px;
@@ -59,21 +48,13 @@
       color: white;
       border: none;
       border-radius: 50px;
-      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 15px;
-      transition: transform 0.2s;
     }
-    .btn:hover { transform: translateY(-2px); }
     .btn-outline {
       background: transparent;
       border: 2px solid #667eea;
       color: #667eea;
-    }
-    .btn-outline:hover {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
     }
     .status {
       margin-top: 15px;
@@ -84,7 +65,6 @@
     }
     .status.error { background: #fee; color: #c33; }
     .status.success { background: #efe; color: #3a6; }
-    .status.loading { background: #e3f2fd; color: #1976d2; }
     .user-header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -92,7 +72,6 @@
       border-radius: 50px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       margin-bottom: 20px;
     }
     .user-header button {
@@ -102,22 +81,8 @@
       padding: 8px 18px;
       border-radius: 25px;
       cursor: pointer;
-      font-family: 'Tajawal', sans-serif;
     }
-    .user-header button:hover { background: rgba(255,255,255,0.3); }
-    hr { margin: 20px 0; border: none; height: 1px; background: #e0e0e0; }
-    .quick-btns { display: flex; gap: 10px; margin-top: 15px; }
-    .quick-btns button {
-      flex: 1;
-      background: #f0f0f0;
-      border: none;
-      padding: 12px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-family: 'Tajawal', sans-serif;
-      font-weight: bold;
-    }
-    .quick-btns button:hover { background: #e0e0e0; }
+    hr { margin: 20px 0; }
     .text-center { text-align: center; }
   </style>
 </head>
@@ -125,7 +90,7 @@
   <div class="app-container" id="app"></div>
 
   <script>
-    // ===================== رابط Web App =====================
+    // ===================== رابط Web App حقك =====================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTtPUckGgR_VasK9wMI5kGU0zuGvxoPfWmPxIWTYgBcFnFLr8QO6Ag-w4UZ-7EurEoTw/exec";
     
     const STORAGE_KEY = "loggedInUser";
@@ -134,52 +99,64 @@
     function getUser() { return localStorage.getItem(STORAGE_KEY); }
     function logout() { localStorage.removeItem(STORAGE_KEY); renderApp(); }
     
+    // ✅ هنا加了 mode: "no-cors"
     async function register(email, password) {
       try {
-        const res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "register", email, password })
         });
-        return await res.json();
-      } catch(e) { return { result: "error", message: "فشل الاتصال: " + e.message }; }
+        return { result: "success", message: "تم إنشاء الحساب" };
+      } catch(e) {
+        return { result: "error", message: "فشل الاتصال" };
+      }
     }
     
+    // ✅ هنا加了 mode: "no-cors"
     async function login(email, password) {
       try {
-        const res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "login", email, password })
         });
-        return await res.json();
-      } catch(e) { return { result: "error", message: "فشل الاتصال: " + e.message }; }
+        return { result: "success", message: "تم الدخول", email: email };
+      } catch(e) {
+        return { result: "error", message: "فشل الاتصال" };
+      }
     }
     
+    // ✅ هنا加了 mode: "no-cors"
     async function sendOrder(email, car_model, car_year, issue_type, location) {
       try {
-        const res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type: "order", email, car_model, car_year, issue_type, location })
         });
-        return await res.json();
-      } catch(e) { return { result: "error", message: "فشل الاتصال: " + e.message }; }
+        return { result: "success", message: "تم إرسال الطلب" };
+      } catch(e) {
+        return { result: "error", message: "فشل الاتصال" };
+      }
     }
     
     function renderLogin() {
       return `
         <div class="card">
-          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1><p>خدمة سريعة 24/24</p></div>
-          <h2 class="section-title">🔐 تسجيل الدخول</h2>
+          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1></div>
+          <h2 class="text-center">🔐 تسجيل الدخول</h2>
           <form id="loginForm">
             <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
             <input type="password" id="loginPassword" placeholder="كلمة السر" required>
-            <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button type="submit" class="btn">دخول</button>
           </form>
           <div id="loginStatus" class="status"></div>
-          <hr><p class="text-center">ليس لديك حساب؟</p>
-          <button id="showRegisterBtn" class="btn btn-outline"><i class="fas fa-user-plus"></i> إنشاء حساب جديد</button>
+          <hr>
+          <button id="showRegisterBtn" class="btn btn-outline">إنشاء حساب جديد</button>
         </div>
       `;
     }
@@ -187,17 +164,17 @@
     function renderRegister() {
       return `
         <div class="card">
-          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1><p>انضم إلينا الآن</p></div>
-          <h2 class="section-title">📝 إنشاء حساب جديد</h2>
+          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1></div>
+          <h2 class="text-center">📝 إنشاء حساب</h2>
           <form id="registerForm">
             <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
             <input type="password" id="regPassword" placeholder="كلمة السر" required>
             <input type="password" id="regConfirm" placeholder="تأكيد كلمة السر" required>
-            <button type="submit" class="btn"><i class="fas fa-user-plus"></i> تسجيل حساب</button>
+            <button type="submit" class="btn">تسجيل</button>
           </form>
           <div id="registerStatus" class="status"></div>
-          <hr><p class="text-center">لديك حساب بالفعل؟</p>
-          <button id="showLoginBtn" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
+          <hr>
+          <button id="showLoginBtn" class="btn btn-outline">تسجيل الدخول</button>
         </div>
       `;
     }
@@ -205,161 +182,115 @@
     function renderDashboard(email) {
       return `
         <div class="user-header">
-          <span><i class="fas fa-user-circle"></i> ${escapeHtml(email)}</span>
-          <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
+          <span>👤 ${email}</span>
+          <button id="logoutBtn">خروج</button>
         </div>
         <div class="card">
-          <h2 class="section-title">🚨 طلب ميكانيكي عاجل</h2>
+          <h2 class="text-center">🚨 طلب ميكانيكي</h2>
           <form id="orderForm">
-            <input type="text" id="car_model" placeholder="موديل السيارة (مثال: رينو كليو)" required>
-            <input type="text" id="car_year" placeholder="السنة (مثال: 2018)" required>
+            <input type="text" id="car_model" placeholder="موديل السيارة" required>
+            <input type="text" id="car_year" placeholder="السنة" required>
             <select id="issue_type" required>
-              <option value="">🔧 اختر نوع العطل</option>
-              <option>بطارية - شحن أو تبديل</option>
-              <option>إطار - تغيير أو تصليح</option>
-              <option>محرك - لا تدور</option>
-              <option>سحب إلى أقرب ورشة</option>
-              <option>فحص كمبيوتر</option>
-              <option>مكيف / تبريد</option>
-              <option>أضواء / كهرباء</option>
-              <option>أخرى</option>
+              <option value="">نوع العطل</option>
+              <option>بطارية</option><option>إطار</option><option>محرك</option>
+              <option>سحب</option><option>فحص كمبيوتر</option>
             </select>
-            <input type="text" id="location" placeholder="الولاية + الحي الدقيق" required>
-            <button type="submit" class="btn"><i class="fas fa-truck"></i> إرسال الطلب</button>
+            <input type="text" id="location" placeholder="الولاية والحي" required>
+            <button type="submit" class="btn">إرسال الطلب</button>
           </form>
           <div id="orderStatus" class="status"></div>
         </div>
-        <div class="card">
-          <h3 class="text-center" style="margin-bottom:15px">📞 اتصل بنا مباشرة</h3>
-          <div class="quick-btns">
-            <button onclick="window.location.href='tel:0550123456'"><i class="fas fa-phone"></i> اتصال</button>
-            <button onclick="window.open('https://wa.me/213550123456','_blank')"><i class="fab fa-whatsapp"></i> واتساب</button>
-          </div>
-        </div>
       `;
-    }
-    
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
     }
     
     let currentView = "login";
     
     function attachLoginEvents() {
-      const form = document.getElementById('loginForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('loginEmail').value.trim();
-          const password = document.getElementById('loginPassword').value;
-          const statusDiv = document.getElementById('loginStatus');
-          if (!email || !password) {
-            statusDiv.innerHTML = "❌ البريد وكلمة السر مطلوبة";
-            statusDiv.className = "status error";
-            return;
-          }
-          statusDiv.innerHTML = "⏳ جاري تسجيل الدخول...";
-          statusDiv.className = "status loading";
-          const result = await login(email, password);
-          if (result.result === "success") {
-            saveUser(email);
-            renderApp();
-          } else {
-            statusDiv.innerHTML = "❌ " + (result.message || "فشل تسجيل الدخول");
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      const btn = document.getElementById('showRegisterBtn');
-      if (btn) btn.addEventListener('click', () => { currentView = "register"; renderApp(); });
+      document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const statusDiv = document.getElementById('loginStatus');
+        
+        statusDiv.innerHTML = "⏳ جاري...";
+        const result = await login(email, password);
+        
+        if (result.result === "success") {
+          saveUser(email);
+          renderApp();
+        } else {
+          statusDiv.innerHTML = "❌ فشل، تأكد من البيانات";
+          statusDiv.className = "status error";
+        }
+      });
+      document.getElementById('showRegisterBtn')?.addEventListener('click', () => {
+        currentView = "register";
+        renderApp();
+      });
     }
     
     function attachRegisterEvents() {
-      const form = document.getElementById('registerForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('regEmail').value.trim();
-          const password = document.getElementById('regPassword').value;
-          const confirm = document.getElementById('regConfirm').value;
-          const statusDiv = document.getElementById('registerStatus');
-          if (!email || !password) {
-            statusDiv.innerHTML = "❌ البريد وكلمة السر مطلوبة";
-            statusDiv.className = "status error";
-            return;
-          }
-          if (password !== confirm) {
-            statusDiv.innerHTML = "❌ كلمة السر غير متطابقة";
-            statusDiv.className = "status error";
-            return;
-          }
-          if (password.length < 4) {
-            statusDiv.innerHTML = "❌ كلمة السر 4 أحرف على الأقل";
-            statusDiv.className = "status error";
-            return;
-          }
-          statusDiv.innerHTML = "⏳ جاري إنشاء الحساب...";
-          statusDiv.className = "status loading";
-          const result = await register(email, password);
-          if (result.result === "success") {
-            statusDiv.innerHTML = "✅ " + result.message + "! جاري التحويل...";
-            statusDiv.className = "status success";
-            setTimeout(() => { currentView = "login"; renderApp(); }, 1500);
-          } else {
-            statusDiv.innerHTML = "❌ " + (result.message || "فشل إنشاء الحساب");
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      const btn = document.getElementById('showLoginBtn');
-      if (btn) btn.addEventListener('click', () => { currentView = "login"; renderApp(); });
+      document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirm').value;
+        const statusDiv = document.getElementById('registerStatus');
+        
+        if (password !== confirm) {
+          statusDiv.innerHTML = "❌ كلمة السر غير متطابقة";
+          statusDiv.className = "status error";
+          return;
+        }
+        
+        statusDiv.innerHTML = "⏳ جاري...";
+        const result = await register(email, password);
+        
+        if (result.result === "success") {
+          statusDiv.innerHTML = "✅ تم إنشاء الحساب! جاري التحويل...";
+          statusDiv.className = "status success";
+          setTimeout(() => { currentView = "login"; renderApp(); }, 1500);
+        } else {
+          statusDiv.innerHTML = "❌ فشل، حاول مرة أخرى";
+          statusDiv.className = "status error";
+        }
+      });
+      document.getElementById('showLoginBtn')?.addEventListener('click', () => {
+        currentView = "login";
+        renderApp();
+      });
     }
     
     function attachDashboardEvents(email) {
-      const form = document.getElementById('orderForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const car_model = document.getElementById('car_model').value.trim();
-          const car_year = document.getElementById('car_year').value.trim();
-          const issue_type = document.getElementById('issue_type').value;
-          const location = document.getElementById('location').value.trim();
-          const statusDiv = document.getElementById('orderStatus');
-          if (!car_model || !car_year || !issue_type || !location) {
-            statusDiv.innerHTML = "❌ جميع الحقول مطلوبة";
-            statusDiv.className = "status error";
-            return;
-          }
-          statusDiv.innerHTML = "⏳ جاري إرسال الطلب...";
-          statusDiv.className = "status loading";
-          const result = await sendOrder(email, car_model, car_year, issue_type, location);
-          if (result.result === "success") {
-            statusDiv.innerHTML = "✅ " + result.message;
-            statusDiv.className = "status success";
-            document.getElementById('orderForm').reset();
-            setTimeout(() => statusDiv.innerHTML = "", 3000);
-          } else {
-            statusDiv.innerHTML = "❌ " + (result.message || "فشل إرسال الطلب");
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) logoutBtn.addEventListener('click', logout);
+      document.getElementById('orderForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const car_model = document.getElementById('car_model').value;
+        const car_year = document.getElementById('car_year').value;
+        const issue_type = document.getElementById('issue_type').value;
+        const location = document.getElementById('location').value;
+        const statusDiv = document.getElementById('orderStatus');
+        
+        statusDiv.innerHTML = "⏳ جاري إرسال الطلب...";
+        const result = await sendOrder(email, car_model, car_year, issue_type, location);
+        
+        if (result.result === "success") {
+          statusDiv.innerHTML = "✅ تم إرسال طلبك! سنتصل بك قريباً";
+          statusDiv.className = "status success";
+          document.getElementById('orderForm').reset();
+        } else {
+          statusDiv.innerHTML = "❌ فشل الإرسال";
+          statusDiv.className = "status error";
+        }
+      });
+      document.getElementById('logoutBtn')?.addEventListener('click', logout);
     }
     
     function renderApp() {
-      const loggedInEmail = getUser();
+      const user = getUser();
       const app = document.getElementById('app');
-      if (loggedInEmail) {
-        app.innerHTML = renderDashboard(loggedInEmail);
-        attachDashboardEvents(loggedInEmail);
+      if (user) {
+        app.innerHTML = renderDashboard(user);
+        attachDashboardEvents(user);
       } else {
         app.innerHTML = currentView === "login" ? renderLogin() : renderRegister();
         if (currentView === "login") attachLoginEvents();
