@@ -7,23 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
       background: #f0f2f5;
       min-height: 100vh;
     }
-    /* حاوية رئيسية */
     .app-container {
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
     }
-    /* البطاقات */
     .card {
       background: white;
       border-radius: 30px;
@@ -72,9 +66,6 @@
       cursor: pointer;
       margin-top: 10px;
     }
-    .btn-danger {
-      background: #e74c3c;
-    }
     .btn-outline {
       background: transparent;
       border: 2px solid #667eea;
@@ -87,14 +78,8 @@
       border-radius: 50px;
       font-weight: bold;
     }
-    .status.error {
-      background: #fee;
-      color: #c33;
-    }
-    .status.success {
-      background: #efe;
-      color: #3a6;
-    }
+    .status.error { background: #fee; color: #c33; }
+    .status.success { background: #efe; color: #3a6; }
     .user-header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -118,12 +103,7 @@
       margin-bottom: 20px;
       color: #333;
     }
-    hr {
-      margin: 20px 0;
-      border: none;
-      height: 1px;
-      background: #e0e0e0;
-    }
+    hr { margin: 20px 0; border: none; height: 1px; background: #e0e0e0; }
     .quick-btns {
       display: flex;
       gap: 10px;
@@ -140,74 +120,51 @@
   </style>
 </head>
 <body>
-  <div class="app-container" id="app">
-    <!-- المحتوى سيتغير بناءً على حالة تسجيل الدخول -->
-  </div>
+  <div class="app-container" id="app"></div>
 
   <script>
-    // ===================== رابط Google Sheets =====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwahp-6JiV3m5oUEabsDoSv3xVeR2PAs-zvutgmX0On4L28wOIflP9ztbHPeUIu8T_rMA/exec";
+    // ===================== رابط Web App الجديد =====================
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaEQaTZgIJvCdWKblzsfvw0ERVnwZ8C7ty0Uz3HqdhGKk4XSNVt9IPcxM0_8YVMj69kw/exec";
     
-    // مفتاح تخزين الجلسة
     const STORAGE_KEY = "loggedInUser";
     
-    // ===================== دوال مساعدة =====================
-    function saveUser(email) {
-      localStorage.setItem(STORAGE_KEY, email);
-    }
+    function saveUser(email) { localStorage.setItem(STORAGE_KEY, email); }
+    function getUser() { return localStorage.getItem(STORAGE_KEY); }
+    function logout() { localStorage.removeItem(STORAGE_KEY); renderApp(); }
     
-    function getUser() {
-      return localStorage.getItem(STORAGE_KEY);
-    }
-    
-    function logout() {
-      localStorage.removeItem(STORAGE_KEY);
-      renderApp();
-    }
-    
-    // ===================== دوال API =====================
+    // دوال API
     async function register(email, password) {
-      const response = await fetch(SCRIPT_URL, {
+      const res = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "register", email: email, password: password })
+        body: JSON.stringify({ type: "register", email, password })
       });
-      return await response.json();
+      return res.json();
     }
     
     async function login(email, password) {
-      const response = await fetch(SCRIPT_URL, {
+      const res = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "login", email: email, password: password })
+        body: JSON.stringify({ type: "login", email, password })
       });
-      return await response.json();
+      return res.json();
     }
     
     async function sendOrder(email, car_model, car_year, issue_type, location) {
-      const response = await fetch(SCRIPT_URL, {
+      const res = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          type: "order", 
-          email: email, 
-          car_model: car_model, 
-          car_year: car_year, 
-          issue_type: issue_type, 
-          location: location 
-        })
+        body: JSON.stringify({ type: "order", email, car_model, car_year, issue_type, location })
       });
-      return await response.json();
+      return res.json();
     }
     
-    // ===================== واجهة تسجيل الدخول =====================
+    // واجهات المستخدم
     function renderLogin() {
       return `
         <div class="card">
-          <div class="logo">
-            <h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1>
-            <p>سجل دخولك لطلب المساعدة</p>
-          </div>
+          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1><p>سجل دخولك لطلب المساعدة</p></div>
           <h2 class="section-title">🔐 تسجيل الدخول</h2>
           <form id="loginForm">
             <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
@@ -215,21 +172,16 @@
             <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
           </form>
           <div id="loginStatus" class="status"></div>
-          <hr>
-          <p style="text-align:center">ليس لديك حساب؟</p>
+          <hr><p style="text-align:center">ليس لديك حساب؟</p>
           <button id="showRegisterBtn" class="btn btn-outline"><i class="fas fa-user-plus"></i> إنشاء حساب جديد</button>
         </div>
       `;
     }
     
-    // ===================== واجهة تسجيل حساب =====================
     function renderRegister() {
       return `
         <div class="card">
-          <div class="logo">
-            <h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1>
-            <p>أنشئ حسابك الآن</p>
-          </div>
+          <div class="logo"><h1>ميكانيكي <span>متنقل</span> 🇩🇿</h1><p>أنشئ حسابك الآن</p></div>
           <h2 class="section-title">📝 إنشاء حساب جديد</h2>
           <form id="registerForm">
             <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
@@ -238,21 +190,18 @@
             <button type="submit" class="btn"><i class="fas fa-user-plus"></i> تسجيل حساب</button>
           </form>
           <div id="registerStatus" class="status"></div>
-          <hr>
-          <p style="text-align:center">لديك حساب بالفعل؟</p>
+          <hr><p style="text-align:center">لديك حساب بالفعل؟</p>
           <button id="showLoginBtn" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
         </div>
       `;
     }
     
-    // ===================== لوحة التحكم (طلب ميكانيكي) =====================
     function renderDashboard(email) {
       return `
         <div class="user-header">
           <span><i class="fas fa-user-circle"></i> ${email}</span>
           <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
         </div>
-        
         <div class="card">
           <h2 class="section-title">🚨 طلب ميكانيكي عاجل</h2>
           <form id="orderForm">
@@ -260,173 +209,123 @@
             <input type="text" id="car_year" placeholder="السنة (مثال: 2018)" required>
             <select id="issue_type" required>
               <option value="">🔧 نوع العطل</option>
-              <option>بطارية - شحن أو تبديل</option>
-              <option>إطار - تغيير أو تصليح</option>
-              <option>محرك - لا تدور</option>
-              <option>سحب إلى أقرب ورشة</option>
-              <option>فحص كمبيوتر</option>
-              <option>مكيف / تبريد</option>
-              <option>أخرى</option>
+              <option>بطارية - شحن أو تبديل</option><option>إطار - تغيير أو تصليح</option>
+              <option>محرك - لا تدور</option><option>سحب إلى أقرب ورشة</option>
+              <option>فحص كمبيوتر</option><option>مكيف / تبريد</option><option>أخرى</option>
             </select>
             <input type="text" id="location" placeholder="الولاية + الحي الدقيق" required>
             <button type="submit" class="btn"><i class="fas fa-truck"></i> إرسال الطلب</button>
           </form>
           <div id="orderStatus" class="status"></div>
         </div>
-        
         <div class="card">
-          <h3 style="margin-bottom: 15px;">📞 اتصل بنا مباشرة</h3>
+          <h3 style="margin-bottom:15px">📞 اتصل بنا مباشرة</h3>
           <div class="quick-btns">
             <button onclick="window.location.href='tel:0550123456'"><i class="fas fa-phone"></i> اتصال</button>
-            <button onclick="window.open('https://wa.me/213550123456', '_blank')"><i class="fab fa-whatsapp"></i> واتساب</button>
+            <button onclick="window.open('https://wa.me/213550123456','_blank')"><i class="fab fa-whatsapp"></i> واتساب</button>
           </div>
         </div>
       `;
     }
     
-    // ===================== ربط الأحداث =====================
-    let currentView = "login"; // login, register
+    let currentView = "login";
     
     function attachLoginEvents() {
       const form = document.getElementById('loginForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('loginEmail').value.trim();
-          const password = document.getElementById('loginPassword').value;
-          const statusDiv = document.getElementById('loginStatus');
-          
-          statusDiv.innerHTML = "⏳ جاري تسجيل الدخول...";
-          statusDiv.className = "status";
-          
-          const result = await login(email, password);
-          if (result.result === "success") {
-            saveUser(email);
-            renderApp();
-          } else {
-            statusDiv.innerHTML = "❌ " + result.message;
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      
-      const showRegisterBtn = document.getElementById('showRegisterBtn');
-      if (showRegisterBtn) {
-        showRegisterBtn.addEventListener('click', () => {
-          currentView = "register";
+      if (form) form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const statusDiv = document.getElementById('loginStatus');
+        statusDiv.innerHTML = "⏳ جاري تسجيل الدخول...";
+        const result = await login(email, password);
+        if (result.result === "success") {
+          saveUser(email);
           renderApp();
-        });
-      }
+        } else {
+          statusDiv.innerHTML = "❌ " + result.message;
+          statusDiv.className = "status error";
+        }
+      });
+      const btn = document.getElementById('showRegisterBtn');
+      if (btn) btn.addEventListener('click', () => { currentView = "register"; renderApp(); });
     }
     
     function attachRegisterEvents() {
       const form = document.getElementById('registerForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('regEmail').value.trim();
-          const password = document.getElementById('regPassword').value;
-          const confirm = document.getElementById('regConfirm').value;
-          const statusDiv = document.getElementById('registerStatus');
-          
-          if (password !== confirm) {
-            statusDiv.innerHTML = "❌ كلمة السر غير متطابقة";
-            statusDiv.className = "status error";
-            return;
-          }
-          if (password.length < 4) {
-            statusDiv.innerHTML = "❌ كلمة السر يجب أن تكون 4 أحرف على الأقل";
-            statusDiv.className = "status error";
-            return;
-          }
-          
-          statusDiv.innerHTML = "⏳ جاري إنشاء الحساب...";
-          statusDiv.className = "status";
-          
-          const result = await register(email, password);
-          if (result.result === "success") {
-            statusDiv.innerHTML = "✅ " + result.message + "! جاري تحويلك لتسجيل الدخول...";
-            statusDiv.className = "status success";
-            setTimeout(() => {
-              currentView = "login";
-              renderApp();
-            }, 1500);
-          } else {
-            statusDiv.innerHTML = "❌ " + result.message;
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      
-      const showLoginBtn = document.getElementById('showLoginBtn');
-      if (showLoginBtn) {
-        showLoginBtn.addEventListener('click', () => {
-          currentView = "login";
-          renderApp();
-        });
-      }
+      if (form) form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirm').value;
+        const statusDiv = document.getElementById('registerStatus');
+        if (password !== confirm) {
+          statusDiv.innerHTML = "❌ كلمة السر غير متطابقة";
+          statusDiv.className = "status error";
+          return;
+        }
+        if (password.length < 4) {
+          statusDiv.innerHTML = "❌ كلمة السر يجب أن تكون 4 أحرف على الأقل";
+          statusDiv.className = "status error";
+          return;
+        }
+        statusDiv.innerHTML = "⏳ جاري إنشاء الحساب...";
+        const result = await register(email, password);
+        if (result.result === "success") {
+          statusDiv.innerHTML = "✅ " + result.message + "! جاري تحويلك لتسجيل الدخول...";
+          statusDiv.className = "status success";
+          setTimeout(() => { currentView = "login"; renderApp(); }, 1500);
+        } else {
+          statusDiv.innerHTML = "❌ " + result.message;
+          statusDiv.className = "status error";
+        }
+      });
+      const btn = document.getElementById('showLoginBtn');
+      if (btn) btn.addEventListener('click', () => { currentView = "login"; renderApp(); });
     }
     
     function attachDashboardEvents(email) {
       const form = document.getElementById('orderForm');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const car_model = document.getElementById('car_model').value.trim();
-          const car_year = document.getElementById('car_year').value.trim();
-          const issue_type = document.getElementById('issue_type').value;
-          const location = document.getElementById('location').value.trim();
-          const statusDiv = document.getElementById('orderStatus');
-          
-          if (!car_model || !car_year || !issue_type || !location) {
-            statusDiv.innerHTML = "❌ جميع الحقول مطلوبة";
-            statusDiv.className = "status error";
-            return;
-          }
-          
-          statusDiv.innerHTML = "⏳ جاري إرسال الطلب...";
-          statusDiv.className = "status";
-          
-          const result = await sendOrder(email, car_model, car_year, issue_type, location);
-          if (result.result === "success") {
-            statusDiv.innerHTML = "✅ " + result.message;
-            statusDiv.className = "status success";
-            document.getElementById('orderForm').reset();
-          } else {
-            statusDiv.innerHTML = "❌ " + result.message;
-            statusDiv.className = "status error";
-          }
-        });
-      }
-      
+      if (form) form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const car_model = document.getElementById('car_model').value.trim();
+        const car_year = document.getElementById('car_year').value.trim();
+        const issue_type = document.getElementById('issue_type').value;
+        const location = document.getElementById('location').value.trim();
+        const statusDiv = document.getElementById('orderStatus');
+        if (!car_model || !car_year || !issue_type || !location) {
+          statusDiv.innerHTML = "❌ جميع الحقول مطلوبة";
+          statusDiv.className = "status error";
+          return;
+        }
+        statusDiv.innerHTML = "⏳ جاري إرسال الطلب...";
+        const result = await sendOrder(email, car_model, car_year, issue_type, location);
+        if (result.result === "success") {
+          statusDiv.innerHTML = "✅ " + result.message;
+          statusDiv.className = "status success";
+          document.getElementById('orderForm').reset();
+        } else {
+          statusDiv.innerHTML = "❌ " + result.message;
+          statusDiv.className = "status error";
+        }
+      });
       const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', logout);
-      }
+      if (logoutBtn) logoutBtn.addEventListener('click', logout);
     }
     
-    // ===================== العرض الرئيسي =====================
     function renderApp() {
       const loggedInEmail = getUser();
       const app = document.getElementById('app');
-      
       if (loggedInEmail) {
-        // المستخدم مسجل دخول → عرض لوحة التحكم
         app.innerHTML = renderDashboard(loggedInEmail);
         attachDashboardEvents(loggedInEmail);
       } else {
-        // غير مسجل دخول → عرض صفحة تسجيل الدخول أو التسجيل
-        if (currentView === "login") {
-          app.innerHTML = renderLogin();
-          attachLoginEvents();
-        } else {
-          app.innerHTML = renderRegister();
-          attachRegisterEvents();
-        }
+        app.innerHTML = currentView === "login" ? renderLogin() : renderRegister();
+        if (currentView === "login") attachLoginEvents();
+        else attachRegisterEvents();
       }
     }
     
-    // بدء التشغيل
     renderApp();
   </script>
 </body>
